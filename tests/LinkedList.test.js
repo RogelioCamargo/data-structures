@@ -48,4 +48,20 @@ describe("LinkedList", () => {
       expect(ll.size).toBe(0);
     });
   }); 
+
+  describe("#pop", () => {
+    test("removes element at the end of list", () => {
+      let ll = new LinkedList();
+      ll.push("Roger"); // Roger -> NULL
+      ll.push("Ade"); // Roger -> Ade -> NULL
+      ll.pop(); 
+
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.size).toBe(1);
+      
+      ll.pop();
+      expect(ll.head).toBeNull();
+      expect(ll.size).toBe(0);
+    });
+  }); 
 }); 
