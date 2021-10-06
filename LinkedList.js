@@ -44,23 +44,33 @@ class LinkedList {
     this.size++; 
   }
 
-  // shift() {
-  //   if (this.head === null) return;
-  //   else {
-  //     let node = this.head.next; 
-  //     this.head = node; 
-  //   }
+  shift() {
+    if (this.head === null) return;
+    else {
+      let node = this.head.next; 
+      this.head = node; 
+    }
 
-  //   this.size--; 
-  // }
+    this.size--; 
+  }
 
-  // display() {
-  //   let current = this.head; 
-  //   while (current !== null) {
-  //     console.log(current.data); 
-  //     current = current.next; 
-  //   }
-  // }
+  display() {
+    let current = this.head; 
+    while (current !== null) {
+      console.log(current.data); 
+      current = current.next; 
+    }
+  }
 }
+
+// let ll = new LinkedList();
+// ll.unshift("Roger"); // Roger -> NULL
+// ll.unshift("Ade"); // Ade -> Roger -> NULL
+// ll.unshift("Emma"); // Emma -> Ade -> Roger -> NULL
+// ll.display();
+// console.log("After ---------")
+// ll.shift(); // Roger -> NULL
+// ll.display(); 
+
 
 module.exports = LinkedList; 

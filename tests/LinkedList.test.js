@@ -32,4 +32,20 @@ describe("LinkedList", () => {
       expect(ll.size).toBe(2);
     });
   }); 
+
+  describe("#shift", () => {
+    test("removes element at the beginning of list", () => {
+      let ll = new LinkedList();
+      ll.unshift("Roger"); // Roger -> NULL
+      ll.unshift("Ade"); // Ade -> Roger -> NULL
+      ll.shift(); // Roger -> NULL
+
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.size).toBe(1);
+
+      ll.shift(); // NULL
+      expect(ll.head).toBeNull();
+      expect(ll.size).toBe(0);
+    });
+  }); 
 }); 
