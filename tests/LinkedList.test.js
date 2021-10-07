@@ -5,7 +5,11 @@ describe("LinkedList", () => {
     test("adds a new element at the beginning of list", () => {
       let ll = new LinkedList();
       ll.unshift("Roger"); // Roger -> NULL
+      expect(ll.head.data).toEqual("Roger"); 
+      expect(ll.tail.data).toEqual("Roger"); 
       ll.unshift("Ade"); // Ade -> Roger -> NULL
+      expect(ll.head.data).toEqual("Ade");
+      expect(ll.tail.data).toEqual("Roger"); 
 
       expect(ll.at(0)).toEqual("Ade");
       expect(ll.at(1)).toEqual("Roger");
@@ -19,11 +23,19 @@ describe("LinkedList", () => {
     test("adds a new element at the end of list", () => {
       let ll = new LinkedList();
       ll.push("Roger"); // Roger -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Roger"); 
       ll.push("Ade"); // Roger -> Ade -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Ade"); 
+      ll.push("Juan"); // Roger -> Ade -> Juan -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Juan");
 
       expect(ll.at(0)).toEqual("Roger");
       expect(ll.at(1)).toEqual("Ade");
-      expect(ll.size).toBe(2);
+      expect(ll.at(2)).toEqual("Juan");
+      expect(ll.size).toBe(3);
 
       ll.clear(); 
     });
@@ -33,8 +45,14 @@ describe("LinkedList", () => {
     test("adds a new element at the specifed index", () => {
       let ll = new LinkedList();
       ll.insertAt("Roger", -1); // Roger -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Roger"); 
       ll.insertAt("Ade", 3); // Roger -> Ade -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Ade"); 
       ll.insertAt("Juan", 1); // Roger -> Juan -> Ade -> NULL; 
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Ade"); 
 
       expect(ll.at(0)).toEqual("Roger");
       expect(ll.at(1)).toEqual("Juan"); 
@@ -49,9 +67,17 @@ describe("LinkedList", () => {
     test("removes element at the beginning of list", () => {
       let ll = new LinkedList();
       ll.unshift("Roger"); // Roger -> NULL
-      ll.unshift("Ade"); // Ade -> Roger -> NULL
-      ll.shift(); // Roger -> NULL
+      ll.unshift("Juan"); // Juan -> Roger -> NULL
+      ll.unshift("Ade"); // Ade -> Juan -> Roger -> NULL
+      ll.shift(); // Juan -> Roger -> NULL
+      expect(ll.head.data).toEqual("Juan");
+      expect(ll.tail.data).toEqual("Roger"); 
+      expect(ll.at(0)).toEqual("Juan");
+      expect(ll.size).toBe(2);
 
+      ll.shift(); // Roger -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Roger"); 
       expect(ll.at(0)).toEqual("Roger");
       expect(ll.size).toBe(1);
 
@@ -66,12 +92,20 @@ describe("LinkedList", () => {
       let ll = new LinkedList();
       ll.push("Roger"); // Roger -> NULL
       ll.push("Ade"); // Roger -> Ade -> NULL
-      ll.pop(); 
+      ll.push("Juan"); // Roger -> Ade -> Juan -> NULL
+      expect(ll.pop()).toEqual("Juan"); // Roger -> Ade -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Ade");
+      expect(ll.at(1)).toEqual("Ade");
+      expect(ll.size).toBe(2);
 
+      expect(ll.pop()).toEqual("Ade"); // Roger -> NULL
+      expect(ll.head.data).toEqual("Roger");
+      expect(ll.tail.data).toEqual("Roger");
       expect(ll.at(0)).toEqual("Roger");
       expect(ll.size).toBe(1);
       
-      ll.pop();
+      expect(ll.pop()).toEqual("Roger"); // NULL
       expect(ll.at(0)).toBeNull();
       expect(ll.size).toBe(0);
     });
@@ -86,16 +120,18 @@ describe("LinkedList", () => {
       ll.push("Emma"); // Roger -> Ade -> Juan -> Emma -> NULL;
 
       expect(ll.at(1)).toEqual("Ade");
-      ll.removeAt(1); // Roger -> Juan -> Emma -> NULL;
+      expect(ll.removeAt(1)).toEqual("Ade"); // Roger -> Juan -> Emma -> NULL;
       expect(ll.at(1)).toEqual("Juan");
 
-      expect(ll.at(0)).toEqual("Roger");
-      ll.removeAt(0); // Juan -> Emma -> NULL;
-      expect(ll.at(0)).toEqual("Juan");
+      expect(ll.at(2)).toEqual("Emma");
+      expect(ll.removeAt(2)).toEqual("Emma"); // Roger -> Juan -> NULL
+      expect(ll.at(1)).toEqual("Juan");
+      expect(ll.at(2)).toBeNull();
 
-      expect(ll.at(1)).toEqual("Emma");
-      ll.removeAt(1); // Emma -> NULL;
-      expect(ll.at(1)).toBeNull();
+      expect(ll.at(0)).toEqual("Roger");
+      expect(ll.removeAt(0)).toEqual("Roger"); // Juan -> NULL;
+
+      expect(ll.removeAt(0)).toEqual("Juan"); // NULL;
     });
   }); 
 

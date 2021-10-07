@@ -8,13 +8,17 @@ class Node {
 class LinkedList {
   constructor() {
     this.head = null; 
+    this.tail = null; 
     this.size = 0;
   }
 
   unshift(data) {
     let newNode = new Node(data); 
 
-    if (!this.head) this.head = newNode; 
+    if (!this.head && !this.tail) {
+      this.head = newNode; 
+      this.tail = newNode; 
+    }
     else {
       // get first node
       let node = this.head; 
@@ -28,13 +32,13 @@ class LinkedList {
   push(data) {
     let newNode = new Node(data); 
 
-    if (!this.head) this.head = newNode; 
+    if (!this.head && !this.tail) { 
+      this.head = newNode; 
+      this.tail = newNode; 
+    }
     else {
-      let current = this.head; 
-      while (current.next) {
-        current = current.next; 
-      }
-      current.next = newNode;
+      this.tail.next = newNode; 
+      this.tail = newNode; 
     }
 
     this.size++; 
@@ -70,25 +74,29 @@ class LinkedList {
     let removedNode = this.head; 
     this.head = this.head.next; 
 
+    if (!this.head) this.tail = null; 
+
     this.size--; 
     return removedNode.data; 
   }
 
   pop() {
-    if (!this.head) return; 
+    if (!this.tail) return; 
 
     let removedNode; 
     if (!this.head.next) {
       removedNode = this.head; 
       this.head = null; 
+      this.tail = null; 
     }
     else {
       let current = this.head;
       while (current.next.next) {
         current = current.next;
       }
-      removedNode = current;
+      removedNode = current.next;
       current.next = null; 
+      this.tail = current; 
     }
 
     this.size--;
@@ -96,8 +104,8 @@ class LinkedList {
   }
 
   removeAt(index) {
-    if (index <= 0) this.shift();
-    else if (index >= (this.size - 1)) this.pop();
+    if (index <= 0) return this.shift();
+    else if (index >= (this.size - 1)) return this.pop();
     else {
       let current = this.head;
       index--;
@@ -107,12 +115,14 @@ class LinkedList {
         index--;
       }
 
+      let removedNode = current.next; 
       let node = current.next.next;
       current.next = node;
 
       // in else statement because other branches
       // call methods that do this already
       this.size--;
+      return removedNode.data; 
     }
   }
   
@@ -163,19 +173,32 @@ class LinkedList {
 }
 
 // let ll = new LinkedList();
-// ll.insertAt("Roger", -1); // Roger -> NULL
-// ll.insertAt("Ade", 3); // Roger -> Ade -> NULL
-// ll.insertAt("Juan", 1); // Roger -> Juan -> Ade -> NULL; 
-// ll.insertAt("Emma", 1); // Roger -> Emma -> Juan -> Ade -> NULL; 
-// ll.insertAt("Kim", 3); // Roger -> Emma -> Juan -> Kim -> Ade -> NULL;
-
+// ll.push("Roger"); // Roger -> NULL
+// ll.push("Ade"); // Roger -> Ade -> NULL
+// ll.push("Juan"); // Roger -> Ade -> Juan -> NULL;
+// ll.push("Emma"); // Roger -> Ade -> Juan -> Emma -> NULL;
 // ll.display(); 
+
 // console.log(); 
-// console.log(ll.at(0)); // Roger
-// console.log(ll.at(1)); // Emma
-// console.log(ll.at(2)); // Juan
-// console.log(ll.at(3)); // Kim
-// console.log(ll.at(4)); // Ade
+
+// // ll.removeAt(1); // Roger -> Juan -> Emma -> NULL;
+// // ll.display(); 
+
+// console.log(ll.removeAt(1)); // Ade
+
+// console.log(); 
+
+// console.log(ll.removeAt(2)); // Emma
+
+// // ll.removeAt(2); // Roger -> Juan -> NULL
+// // ll.display(); 
+
+// console.log(); 
+
+// console.log(ll.removeAt(0)); // Roger
+
+// // ll.removeAt(0); // Juan -> NULL;
+// // ll.display(); 
 
 // ll.clear();
 
