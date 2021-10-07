@@ -14,9 +14,7 @@ class LinkedList {
   unshift(data) {
     let newNode = new Node(data); 
 
-    if (this.head === null) {
-      this.head = newNode; 
-    }
+    if (!this.head) this.head = newNode; 
     else {
       // get first node
       let node = this.head; 
@@ -30,12 +28,10 @@ class LinkedList {
   push(data) {
     let newNode = new Node(data); 
 
-    if (this.head === null) {
-      this.head = newNode; 
-    }
+    if (!this.head) this.head = newNode; 
     else {
       let current = this.head; 
-      while (current.next !== null) {
+      while (current.next) {
         current = current.next; 
       }
       current.next = newNode;
@@ -45,23 +41,18 @@ class LinkedList {
   }
 
   shift() {
-    if (this.head === null) return;
-    else {
-      let node = this.head.next; 
-      this.head = node; 
-    }
+    if (!this.head) return;
+    else this.head = this.head.next; 
 
     this.size--; 
   }
 
   pop() {
-    if (this.head === null) return; 
-    else if (this.head.next === null) {
-      this.head = null; 
-    }
+    if (!this.head) return; 
+    else if (!this.head.next) this.head = null; 
     else {
       let current = this.head;
-      while (current.next.next !== null) {
+      while (current.next.next) {
         current = current.next;
       }
       current.next = null; 
@@ -70,23 +61,28 @@ class LinkedList {
     this.size--;
   }
 
+  isEmpty() {
+    return this.size === 0; 
+  }
+
+  indexOf(data) {
+    let index = 0; 
+    let current = this.head; 
+    while (current) {
+      if (current.data === data) return index;
+      current = current.next;
+      index++;
+    }
+    return -1; 
+  }
+
   display() {
     let current = this.head; 
-    while (current !== null) {
+    while (current) {
       console.log(current.data); 
       current = current.next; 
     }
   }
 }
-
-// let ll = new LinkedList();
-// ll.unshift("Roger"); // Roger -> NULL
-// ll.unshift("Ade"); // Ade -> Roger -> NULL
-// ll.unshift("Emma"); // Emma -> Ade -> Roger -> NULL
-// ll.display();
-// console.log("After ---------")
-// ll.shift(); // Roger -> NULL
-// ll.display(); 
-
 
 module.exports = LinkedList; 

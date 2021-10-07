@@ -64,4 +64,29 @@ describe("LinkedList", () => {
       expect(ll.size).toBe(0);
     });
   }); 
+
+  describe("#isEmpty", () => {
+    test("checks if the list is empty", () => {
+      let ll = new LinkedList();
+      ll.push("Roger"); // Roger -> NULL
+
+      expect(ll.isEmpty()).toBe(false);
+
+      ll.pop();
+
+      expect(ll.isEmpty()).toBe(true);
+    });
+  }); 
+
+  describe("#indexOf", () => {
+    test("checks if the list is empty", () => {
+      let ll = new LinkedList();
+      ll.push("Roger"); // Roger -> NULL
+      ll.push("Ade"); // Roger -> Ade -> NULL
+      ll.push("Juan"); // Roger -> Ade -> Juan -> NULL
+
+      expect(ll.indexOf("Roger")).toBe(0);
+      expect(ll.indexOf("Juan")).toBe(2); 
+    });
+  }); 
 }); 
