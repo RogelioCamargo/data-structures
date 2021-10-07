@@ -20,7 +20,6 @@ class LinkedList {
       this.tail = newNode; 
     }
     else {
-      // get first node
       let node = this.head; 
       this.head = newNode; 
       newNode.next = node; 
@@ -51,6 +50,9 @@ class LinkedList {
       let newNode = new Node(data); 
 
       let current = this.head; 
+      // if you're inserting at index 1 and size is 2, 
+      // then you need the node at index 0. 
+      // so in reality, you're actually searching for index: index - 1
       index--; 
 
       while(index > 0) {
@@ -71,10 +73,16 @@ class LinkedList {
   shift() {
     if (!this.head) return;
 
-    let removedNode = this.head; 
-    this.head = this.head.next; 
-
-    if (!this.head) this.tail = null; 
+    let removedNode; 
+    if (!this.head.next) {
+      removedNode = this.head; 
+      this.head = null; 
+      this.tail = null; 
+    }
+    else {
+      removedNode = this.head; 
+      this.head = this.head.next; 
+    }
 
     this.size--; 
     return removedNode.data; 
@@ -108,6 +116,9 @@ class LinkedList {
     else if (index >= (this.size - 1)) return this.pop();
     else {
       let current = this.head;
+      // if you're inserting at index 1 and size is 2, 
+      // then you need the node at index 0. 
+      // so in reality, you're actually searching for index: index - 1
       index--;
 
       while (index > 0) {
@@ -161,6 +172,7 @@ class LinkedList {
 
   clear () {
     this.head = null; 
+    this.tail = null;
   }
 
   display() {
@@ -171,35 +183,5 @@ class LinkedList {
     }
   }
 }
-
-// let ll = new LinkedList();
-// ll.push("Roger"); // Roger -> NULL
-// ll.push("Ade"); // Roger -> Ade -> NULL
-// ll.push("Juan"); // Roger -> Ade -> Juan -> NULL;
-// ll.push("Emma"); // Roger -> Ade -> Juan -> Emma -> NULL;
-// ll.display(); 
-
-// console.log(); 
-
-// // ll.removeAt(1); // Roger -> Juan -> Emma -> NULL;
-// // ll.display(); 
-
-// console.log(ll.removeAt(1)); // Ade
-
-// console.log(); 
-
-// console.log(ll.removeAt(2)); // Emma
-
-// // ll.removeAt(2); // Roger -> Juan -> NULL
-// // ll.display(); 
-
-// console.log(); 
-
-// console.log(ll.removeAt(0)); // Roger
-
-// // ll.removeAt(0); // Juan -> NULL;
-// // ll.display(); 
-
-// ll.clear();
 
 module.exports = LinkedList; 
