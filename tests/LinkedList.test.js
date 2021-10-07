@@ -121,6 +121,7 @@ describe("LinkedList", () => {
 
       expect(ll.indexOf("Roger")).toBe(0);
       expect(ll.indexOf("Juan")).toBe(2); 
+      expect(ll.indexOf("Jorge")).toBeNull();
 
       ll.clear(); 
     });

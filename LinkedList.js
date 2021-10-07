@@ -146,7 +146,7 @@ class LinkedList {
       current = current.next;
       index++;
     }
-    return -1; 
+    return null; 
   }
 
   clear () {
