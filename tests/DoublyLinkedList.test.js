@@ -58,53 +58,56 @@ describe("DoublyLinkedList", () => {
     });
   });
 
-  // describe("#shift", () => {
-  //   test("removes element at the beginning of list", () => {
-  //     // let ll = new DoublyLinkedList();
-  //     // ll.unshift("Roger"); // Roger -> NULL
-  //     // ll.unshift("Juan"); // Juan -> Roger -> NULL
-  //     // ll.unshift("Ade"); // Ade -> Juan -> Roger -> NULL
-  //     // ll.shift(); // Juan -> Roger -> NULL
-  //     // expect(ll.head.data).toEqual("Juan");
-  //     // expect(ll.tail.data).toEqual("Roger");
-  //     // expect(ll.at(0)).toEqual("Juan");
-  //     // expect(ll.size).toBe(2);
+  describe("#shift", () => {
+    test("removes element at the beginning of list", () => {
+      let dll = new DoublyLinkedList();
+      dll.unshift(1);
+      dll.unshift(2);
+      dll.unshift(3);
+      dll.unshift(4); // 4 -> 3 -> 2 -> 1 -> NULL
 
-  //     // ll.shift(); // Roger -> NULL
-  //     // expect(ll.head.data).toEqual("Roger");
-  //     // expect(ll.tail.data).toEqual("Roger");
-  //     // expect(ll.at(0)).toEqual("Roger");
-  //     // expect(ll.size).toBe(1);
+      expect(dll.shift()).toBe(4); // 3 -> 2 -> 1 -> NULL
 
-  //     // ll.shift(); // NULL
-  //     // expect(ll.at(0)).toBeNull();
-  //     // expect(ll.size).toBe(0);
-  //   });
-  // });
+      expect(dll.at(1).prev.data).toBe(3);
+      expect(dll.at(1).data).toBe(2);
+      expect(dll.at(1).next.data).toBe(1);
 
-  // describe("#pop", () => {
-  //   test("removes element at the end of list", () => {
-  //     // let ll = new DoublyLinkedList();
-  //     // ll.push("Roger"); // Roger -> NULL
-  //     // ll.push("Ade"); // Roger -> Ade -> NULL
-  //     // ll.push("Juan"); // Roger -> Ade -> Juan -> NULL
-  //     // expect(ll.pop()).toEqual("Juan"); // Roger -> Ade -> NULL
-  //     // expect(ll.head.data).toEqual("Roger");
-  //     // expect(ll.tail.data).toEqual("Ade");
-  //     // expect(ll.at(1)).toEqual("Ade");
-  //     // expect(ll.size).toBe(2);
+      expect(dll.shift()).toBe(3); // 2 -> 1 -> NULL
 
-  //     // expect(ll.pop()).toEqual("Ade"); // Roger -> NULL
-  //     // expect(ll.head.data).toEqual("Roger");
-  //     // expect(ll.tail.data).toEqual("Roger");
-  //     // expect(ll.at(0)).toEqual("Roger");
-  //     // expect(ll.size).toBe(1);
+      expect(dll.at(0).prev).toBeNull();
+      expect(dll.at(0).data).toBe(2);
+      expect(dll.at(0).next.data).toBe(1);
 
-  //     // expect(ll.pop()).toEqual("Roger"); // NULL
-  //     // expect(ll.at(0)).toBeNull();
-  //     // expect(ll.size).toBe(0);
-  //   });
-  // });
+      expect(dll.shift()).toBe(2);
+      expect(dll.shift()).toBe(1);
+
+      dll.clear();
+    });
+  });
+
+  describe("#pop", () => {
+    test("removes element at the end of list", () => {
+      let dll = new DoublyLinkedList();
+      dll.push(1);
+      dll.push(2);
+      dll.push(3);
+      dll.push(4); // 1 -> 2 -> 3 -> 4 -> NULL
+
+      expect(dll.pop()).toBe(4); // 1 -> 2 -> 3 -> NULL
+
+      expect(dll.at(1).prev.data).toBe(1);
+      expect(dll.at(1).data).toBe(2);
+      expect(dll.at(1).next.data).toBe(3);
+
+      expect(dll.pop()).toBe(3); // 1 -> 2 -> NULL
+
+      expect(dll.at(1).prev.data).toBe(1); 
+      expect(dll.at(1).data).toBe(2);
+      expect(dll.at(1).next).toBeNull(); 
+
+      dll.clear();
+    });
+  });
 
   // describe("#removeAt", () => {
   //   test("removes an element at the specifed index", () => {
@@ -127,34 +130,6 @@ describe("DoublyLinkedList", () => {
   //     // expect(ll.removeAt(0)).toEqual("Roger"); // Juan -> NULL;
 
   //     // expect(ll.removeAt(0)).toEqual("Juan"); // NULL;
-  //   });
-  // });
-
-  // describe("#isEmpty", () => {
-  //   test("checks if the list is empty", () => {
-  //     // let ll = new DoublyLinkedList();
-  //     // ll.push("Roger"); // Roger -> NULL
-
-  //     // expect(ll.isEmpty()).toBe(false);
-
-  //     // ll.pop();
-
-  //     // expect(ll.isEmpty()).toBe(true);
-  //   });
-  // });
-
-  // describe("#indexOf", () => {
-  //   test("checks if the list is empty", () => {
-  //     // let ll = new DoublyLinkedList();
-  //     // ll.push("Roger"); // Roger -> NULL
-  //     // ll.push("Ade"); // Roger -> Ade -> NULL
-  //     // ll.push("Juan"); // Roger -> Ade -> Juan -> NULL
-
-  //     // expect(ll.indexOf("Roger")).toBe(0);
-  //     // expect(ll.indexOf("Juan")).toBe(2);
-  //     // expect(ll.indexOf("Jorge")).toBeNull();
-
-  //     // ll.clear();
   //   });
   // });
 });

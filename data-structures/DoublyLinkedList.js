@@ -87,6 +87,7 @@ class DoublyLinkedList {
     } else {
       removedNode = this.head;
       this.head = this.head.next;
+      this.head.prev = null; 
     }
 
     this.size--;
@@ -102,13 +103,9 @@ class DoublyLinkedList {
       this.head = null;
       this.tail = null;
     } else {
-      let current = this.head;
-      while (current.next.next) {
-        current = current.next;
-      }
-      removedNode = current.next;
-      current.next = null;
-      this.tail = current;
+      removedNode = this.tail;
+      this.tail = this.tail.prev;
+      this.tail.next = null; 
     }
 
     this.size--;
