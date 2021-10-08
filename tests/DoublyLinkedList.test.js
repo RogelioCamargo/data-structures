@@ -17,20 +17,6 @@ describe("DoublyLinkedList", () => {
 
       expect(dll.size).toBe(3);
       dll.clear();
-
-      // let ll = new DoublyLinkedList();
-      // ll.unshift("Roger"); // Roger -> NULL
-      // expect(ll.head.data).toEqual("Roger");
-      // expect(ll.tail.data).toEqual("Roger");
-      // ll.unshift("Ade"); // Ade -> Roger -> NULL
-      // expect(ll.head.data).toEqual("Ade");
-      // expect(ll.tail.data).toEqual("Roger");
-
-      // expect(ll.at(0)).toEqual("Ade");
-      // expect(ll.at(1)).toEqual("Roger");
-      // expect(ll.size).toBe(2);
-
-      // ll.clear();
     });
   });
 
@@ -53,27 +39,24 @@ describe("DoublyLinkedList", () => {
     });
   });
 
-  // describe("#insert", () => {
-  //   test("adds a new element at the specifed index", () => {
-  //     // let ll = new DoublyLinkedList();
-  //     // ll.insertAt("Roger", -1); // Roger -> NULL
-  //     // expect(ll.head.data).toEqual("Roger");
-  //     // expect(ll.tail.data).toEqual("Roger");
-  //     // ll.insertAt("Ade", 3); // Roger -> Ade -> NULL
-  //     // expect(ll.head.data).toEqual("Roger");
-  //     // expect(ll.tail.data).toEqual("Ade");
-  //     // ll.insertAt("Juan", 1); // Roger -> Juan -> Ade -> NULL;
-  //     // expect(ll.head.data).toEqual("Roger");
-  //     // expect(ll.tail.data).toEqual("Ade");
+  describe("#insertAt", () => {
+    test("adds a new element at the specifed index", () => {
+      let dll = new DoublyLinkedList();
+      dll.insertAt(1, 0);
+      dll.insertAt(2, 1);
+      dll.insertAt(3, 1); // 1 -> 3 -> 2 -> NULL
 
-  //     // expect(ll.at(0)).toEqual("Roger");
-  //     // expect(ll.at(1)).toEqual("Juan");
-  //     // expect(ll.at(2)).toEqual("Ade");
-  //     // expect(ll.size).toBe(3);
+      expect(dll.head.data).toBe(1);
+      expect(dll.tail.data).toBe(2);
 
-  //     // ll.clear();
-  //   });
-  // });
+      expect(dll.at(1).prev.data).toBe(1);
+      expect(dll.at(1).data).toBe(3);
+      expect(dll.at(1).next.data).toBe(2);
+
+      expect(dll.size).toBe(3);
+      dll.clear();
+    });
+  });
 
   // describe("#shift", () => {
   //   test("removes element at the beginning of list", () => {

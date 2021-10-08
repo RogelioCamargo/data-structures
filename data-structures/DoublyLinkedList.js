@@ -46,8 +46,10 @@ class DoublyLinkedList {
   }
 
   insertAt(data, index) {
-    if (index <= 0) this.unshift(data);
-    else if (index >= this.size) this.push(data);
+    if (index < 0 && index > this.size) return null; 
+
+    if (index === 0) this.unshift(data);
+    else if (index === this.size) this.push(data);
     else {
       let newNode = new Node(data);
 
@@ -62,9 +64,11 @@ class DoublyLinkedList {
         index--;
       }
 
-      let node = current.next;
+      newNode.prev = current;  
+      let linkNode = current.next;
       current.next = newNode;
-      newNode.next = node;
+      newNode.next = linkNode;
+      linkNode.prev = newNode;
 
       // in else statement because other branches
       // call methods that do this already
