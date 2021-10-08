@@ -20,10 +20,9 @@ class DoublyLinkedList {
       this.head = newNode;
       this.tail = newNode;
     } else {
-      let oldHeadNode = this.head;
+      newNode.next = this.head;
       this.head.prev = newNode; 
       this.head = newNode;
-      newNode.next = oldHeadNode;
     }
 
     this.size++;
@@ -36,10 +35,9 @@ class DoublyLinkedList {
       this.head = newNode;
       this.tail = newNode;
     } else {
-      let oldTailNode = this.tail; 
+      newNode.prev = this.tail;
       this.tail.next = newNode;
       this.tail = newNode;
-      newNode.prev = oldTailNode;
     }
 
     this.size++;
@@ -166,6 +164,29 @@ class DoublyLinkedList {
     this.head = null;
     this.tail = null;
   }
+
+  traverse(direction) {
+    let elements = []; 
+
+    if (direction === "F") {
+      let current = this.head; 
+
+      while (current) {
+        elements.push(current.data); 
+        current = current.next; 
+      }
+    }
+    else {
+      let current = this.tail;
+
+      while (current) {
+        elements.push(current.data);
+        current = current.prev;
+      }
+    }
+
+    return elements;
+  }
 }
 
 // let dll = new DoublyLinkedList();
@@ -182,5 +203,18 @@ class DoublyLinkedList {
 // console.log(); 
 // console.log(dll.at(2).prev.data); 
 // console.log(dll.at(2).data);
+
+// let dll = new DoublyLinkedList();
+// dll.unshift(2);
+// dll.unshift(1);
+// dll.push(3);
+// dll.push(5);
+// dll.insertAt(4, 3); // 1 -> 2 -> 3 -> 4 -> 5 -> NULL
+
+// console.log(dll.traverse("F")); 
+// console.log(dll.traverse("B")); 
+
+
+// dll.clear();
 
 module.exports = DoublyLinkedList;

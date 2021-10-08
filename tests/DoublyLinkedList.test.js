@@ -126,4 +126,38 @@ describe("DoublyLinkedList", () => {
       dll.clear(); 
     });
   });
+
+  describe("#traverse (forwards and backwards)", () => {
+    test("ensures that everything is linked properly", () => {
+      let dll = new DoublyLinkedList();
+      dll.unshift(2);
+      dll.unshift(1);
+      dll.push(3);
+      dll.push(5);
+      dll.insertAt(4, 3); // 1 -> 2 -> 3 -> 4 -> 5 -> NULL
+
+      expect(dll.traverse("F")).toEqual([1, 2, 3, 4, 5]); 
+      expect(dll.traverse("B")).toEqual([5, 4, 3, 2, 1]); 
+
+      dll.shift(); 
+      expect(dll.traverse("F")).toEqual([2, 3, 4, 5]);
+      expect(dll.traverse("B")).toEqual([5, 4, 3, 2]); 
+
+      dll.pop();
+      expect(dll.traverse("F")).toEqual([2, 3, 4]);
+      expect(dll.traverse("B")).toEqual([4, 3, 2]); 
+
+      dll.removeAt(1);
+      expect(dll.traverse("F")).toEqual([2, 4]);
+      expect(dll.traverse("B")).toEqual([4, 2]); 
+
+      dll.pop();
+      dll.shift();
+
+      expect(dll.traverse("F")).toEqual([]);
+      expect(dll.traverse("B")).toEqual([]); 
+
+      dll.clear();
+    });
+  });
 });
