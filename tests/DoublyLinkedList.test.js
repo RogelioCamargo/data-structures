@@ -109,27 +109,21 @@ describe("DoublyLinkedList", () => {
     });
   });
 
-  // describe("#removeAt", () => {
-  //   test("removes an element at the specifed index", () => {
-  //     // let ll = new DoublyLinkedList();
-  //     // ll.push("Roger"); // Roger -> NULL
-  //     // ll.push("Ade"); // Roger -> Ade -> NULL
-  //     // ll.push("Juan"); // Roger -> Ade -> Juan -> NULL;
-  //     // ll.push("Emma"); // Roger -> Ade -> Juan -> Emma -> NULL;
+  describe("#removeAt", () => {
+    test("removes an element at the specifed index", () => {
+      let dll = new DoublyLinkedList();
+      dll.push(1);
+      dll.push(2);
+      dll.push(3);
+      dll.push(4); // 1 -> 2 -> 3 -> 4 -> NULL
 
-  //     // expect(ll.at(1)).toEqual("Ade");
-  //     // expect(ll.removeAt(1)).toEqual("Ade"); // Roger -> Juan -> Emma -> NULL;
-  //     // expect(ll.at(1)).toEqual("Juan");
+      expect(dll.removeAt(2)).toBe(3); // 1 -> 2 -> 4 -> NULL
 
-  //     // expect(ll.at(2)).toEqual("Emma");
-  //     // expect(ll.removeAt(2)).toEqual("Emma"); // Roger -> Juan -> NULL
-  //     // expect(ll.at(1)).toEqual("Juan");
-  //     // expect(ll.at(2)).toBeNull();
+      expect(dll.at(1).prev.data).toBe(1);
+      expect(dll.at(1).data).toBe(2);
+      expect(dll.at(1).next.data).toBe(4);
 
-  //     // expect(ll.at(0)).toEqual("Roger");
-  //     // expect(ll.removeAt(0)).toEqual("Roger"); // Juan -> NULL;
-
-  //     // expect(ll.removeAt(0)).toEqual("Juan"); // NULL;
-  //   });
-  // });
+      dll.clear(); 
+    });
+  });
 });

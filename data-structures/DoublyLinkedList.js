@@ -54,21 +54,15 @@ class DoublyLinkedList {
       let newNode = new Node(data);
 
       let current = this.head;
-      // if you're inserting at index 1 and size is 2,
-      // then you need the node at index 0.
-      // so in reality, you're actually searching for index: index - 1
-      index--;
-
       while (index > 0) {
         current = current.next;
         index--;
       }
 
-      newNode.prev = current;  
-      let linkNode = current.next;
-      current.next = newNode;
-      newNode.next = linkNode;
-      linkNode.prev = newNode;
+      newNode.next = current; 
+      newNode.prev = current.prev; 
+      current.prev.next = newNode; 
+      current.prev = newNode; 
 
       // in else statement because other branches
       // call methods that do this already
@@ -113,23 +107,21 @@ class DoublyLinkedList {
   }
 
   removeAt(index) {
-    if (index <= 0) return this.shift();
-    else if (index >= this.size - 1) return this.pop();
+    if (index < 0 && index > this.size) return null; 
+
+    if (index === 0) return this.shift();
+    else if (index === this.size - 1) return this.pop();
     else {
       let current = this.head;
-      // if you're inserting at index 1 and size is 2,
-      // then you need the node at index 0.
-      // so in reality, you're actually searching for index: index - 1
-      index--;
 
       while (index > 0) {
         current = current.next;
         index--;
       }
 
-      let removedNode = current.next;
-      let node = current.next.next;
-      current.next = node;
+      let removedNode = current; 
+      current.prev.next = current.next; 
+      current.next.prev = current.prev; 
 
       // in else statement because other branches
       // call methods that do this already
