@@ -44,8 +44,10 @@ class LinkedList {
   }
 
   insertAt(data, index) {
-    if (index <= 0) this.unshift(data); 
-    else if (index >= this.size) this.push(data); 
+    if (index < 0 || index > this.size) return null;
+     
+    if (index === 0) this.unshift(data); 
+    else if (index === this.size) this.push(data); 
     else {
       let newNode = new Node(data); 
 
@@ -71,7 +73,7 @@ class LinkedList {
   }
 
   shift() {
-    if (!this.head) return;
+    if (!this.head) return null;
 
     let removedNode; 
     if (!this.head.next) {
@@ -89,7 +91,7 @@ class LinkedList {
   }
 
   pop() {
-    if (!this.tail) return; 
+    if (!this.tail) return null; 
 
     let removedNode; 
     if (!this.head.next) {
@@ -112,8 +114,10 @@ class LinkedList {
   }
 
   removeAt(index) {
-    if (index <= 0) return this.shift();
-    else if (index >= (this.size - 1)) return this.pop();
+    if (index < 0 || index > this.size) return null; 
+    
+    if (index === 0) return this.shift();
+    else if (index === (this.size - 1)) return this.pop();
     else {
       let current = this.head;
       // if you're inserting at index 1 and size is 2, 

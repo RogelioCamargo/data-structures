@@ -41,13 +41,13 @@ describe("LinkedList", () => {
     });
   }); 
 
-  describe("#insert", () => {
+  describe("#insertAt", () => {
     test("adds a new element at the specifed index", () => {
       let ll = new LinkedList();
-      ll.insertAt("Roger", -1); // Roger -> NULL
+      ll.insertAt("Roger", 0); // Roger -> NULL
       expect(ll.head.data).toEqual("Roger");
       expect(ll.tail.data).toEqual("Roger"); 
-      ll.insertAt("Ade", 3);    // Roger -> Ade -> NULL
+      ll.insertAt("Ade", 1);    // Roger -> Ade -> NULL
       expect(ll.head.data).toEqual("Roger");
       expect(ll.tail.data).toEqual("Ade"); 
       ll.insertAt("Juan", 1);   // Roger -> Juan -> Ade -> NULL; 
