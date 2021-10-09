@@ -1,4 +1,4 @@
-const DoublyLinkedList = require("../data-structures/DoublyLinkedList");
+const DoublyLinkedList = require("../ds/DoublyLinkedList");
 
 describe("DoublyLinkedList", () => {
   describe("#unshift", () => {

@@ -189,32 +189,4 @@ class DoublyLinkedList {
   }
 }
 
-// let dll = new DoublyLinkedList();
-// dll.push(1);
-// dll.push(2);
-// dll.push(3);
-
-// console.log(dll.at(0).data);
-// console.log(dll.at(0).next.data); 
-// console.log();
-// console.log(dll.at(1).prev.data);
-// console.log(dll.at(1).data); 
-// console.log(dll.at(1).next.data); 
-// console.log(); 
-// console.log(dll.at(2).prev.data); 
-// console.log(dll.at(2).data);
-
-// let dll = new DoublyLinkedList();
-// dll.unshift(2);
-// dll.unshift(1);
-// dll.push(3);
-// dll.push(5);
-// dll.insertAt(4, 3); // 1 -> 2 -> 3 -> 4 -> 5 -> NULL
-
-// console.log(dll.traverse("F")); 
-// console.log(dll.traverse("B")); 
-
-
-// dll.clear();
-
 module.exports = DoublyLinkedList;

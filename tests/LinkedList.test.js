@@ -1,4 +1,4 @@
-const LinkedList = require("../data-structures/LinkedList"); 
+const LinkedList = require("../ds/LinkedList"); 
 
 describe("LinkedList", () => {
   describe("#unshift", () => {
