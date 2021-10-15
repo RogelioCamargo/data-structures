@@ -79,6 +79,17 @@ class BinarySearchTree {
     }
   }
 
+  getMin(node) {
+    if (!node) return null;
+    if (!node.left) return node;
+    else return this.getMin(node.left);
+  }
+
+  getMax(node) {
+    if (!node) return null;
+    if (!node.right) return node;
+    else return this.getMax(node.right);
+  }
 }
 
 let bst = new BinarySearchTree(); 
