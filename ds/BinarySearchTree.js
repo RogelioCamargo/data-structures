@@ -114,6 +114,28 @@ class BinarySearchTree {
     if (!node.right) return node;
     else return this.getMax(node.right);
   }
+
+  getHeight(node) {
+    if (!node) return -1; 
+
+    let leftHeight = this.getHeight(node.left); 
+    let rightHeight = this.getHeight(node.right); 
+
+    return Math.max(leftHeight, rightHeight) + 1; 
+  }
+
+  isBalanced(node) {
+    if (!node) return true; 
+
+    let leftHeight = this.getHeight(node.left); 
+    let rightHeight = this.getHeight(node.right); 
+    let difference = Math.abs(leftHeight - rightHeight); 
+
+    if (difference > 1) return false; 
+    else {
+      return this.isBalanced(node.left) && this.isBalanced(node.right); 
+    }
+  }
 }
 
 let bst = new BinarySearchTree(); 
