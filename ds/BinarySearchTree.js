@@ -28,6 +28,34 @@ class BinarySearchTree {
       insertNode(this.root, newNode);
     }
   }
+
+  remove(data) {
+    this.root = this.removeNode(this.root, data); 
+  }
+
+  removeNode(node, data) {
+    if (!node) return null; 
+    else if (data < node.data) {
+      node.left = this.removeNode(node.left, data); 
+      return node; 
+    }
+    else if (data > node.data) {
+      node.right = this.removeNode(node.right, data); 
+      return node; 
+    }
+    else {
+      if (!node.left && !node.right) return null; 
+      else if (!node.left) return node.right; 
+      else if (!node.right) return node.left; 
+      else {
+        let minNode = this.getMin(node.right); 
+        node.data = minNode.data; 
+        node.right = this.removeNode(node.right, minNode.data);
+        return node;
+      }
+    }
+  }
+
 }
 
 let bst = new BinarySearchTree(); 
