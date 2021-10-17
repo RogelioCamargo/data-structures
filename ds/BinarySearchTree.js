@@ -77,30 +77,6 @@ class BinarySearchTree {
     }
   }
 
-  breadth(node) {
-    let queue = [];
-    queue.push(this.root);
-
-    while (queue.length > 0) {
-      let node = queue.shift();
-      console.log(node.data);
-      if (node.left) queue.push(node.left);
-      if (node.right) queue.push(node.right);
-    }
-  }
-
-  depth(node) {
-    let stack = []; 
-    stack.push(this.root); 
-
-    while (stack.length > 0) {
-      let node = stack.pop(); 
-      console.log(node.data); 
-      if (node.right) stack.push(node.right); 
-      if (node.left) stack.push(node.left); 
-    }
-  }
-
   getMin(node) {
     if (!node) return null;
 
@@ -115,26 +91,21 @@ class BinarySearchTree {
     else return this.getMax(node.right);
   }
 
-  getHeight(node) {
-    if (!node) return -1; 
-
-    let leftHeight = this.getHeight(node.left); 
-    let rightHeight = this.getHeight(node.right); 
-
-    return Math.max(leftHeight, rightHeight) + 1; 
+  getLCA(node, p, q) {
+    if (!node) return null; 
+    if (node === p || node === q) return node;
+    let left = this.getLCA(node.left, p, q); 
+    let right = this.getLCA(node.right, p, q); 
+    if (left && right) return node; 
+    if (!left && !right) return null; 
+    return left ? left : right; 
   }
 
-  isBalanced(node) {
-    if (!node) return true; 
-
-    let leftHeight = this.getHeight(node.left); 
-    let rightHeight = this.getHeight(node.right); 
-    let difference = Math.abs(leftHeight - rightHeight); 
-
-    if (difference > 1) return false; 
-    else {
-      return this.isBalanced(node.left) && this.isBalanced(node.right); 
-    }
+  search(node, target) {
+    if (!node) return null; 
+    else if (target < node.data) return this.search(node.left, target); 
+    else if (target > node.data) return this.search(node.right, target); 
+    else return node; 
   }
 }
 
@@ -147,6 +118,12 @@ bst.insert(4);
 bst.insert(7);
 bst.insert(6); 
 bst.insert(8);
+
+let p = bst.search(bst.root, 3); 
+let q = bst.search(bst.root, 7);
+
+console.log(bst.getLCA(bst.root, p, q)); 
+
 // bst.insert(9);
 // bst.insert(10);
 
@@ -167,7 +144,7 @@ bst.insert(8);
 
 // bst.remove(6);
 
-console.log(bst.isBalanced(bst.root));
+// console.log(bst.isBalanced(bst.root));
 
 // bst.inOrder(bst.root);
 // console.log(); 
@@ -175,3 +152,11 @@ console.log(bst.isBalanced(bst.root));
 // console.log(bst.getMin(bst.root)); 
 // console.log();
 // console.log(bst.getMax(bst.root)); 
+
+bst.remove(5);
+bst.remove(3);
+bst.remove(2);
+bst.remove(4);
+bst.remove(7);
+bst.remove(6);
+bst.remove(8);
