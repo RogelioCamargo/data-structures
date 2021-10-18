@@ -52,7 +52,6 @@ class Trie {
 
   delete(word) {
     if (!word.length) return null; 
-    if (!this.search(word)) return null; 
 
     this.deleteNode(this.root, word, 0); 
   }
@@ -66,11 +65,11 @@ class Trie {
     let char = word.charAt(index); 
     let charNode = current.children.get(char); 
 
-    this.deleteNode(charNode, word, index + 1); 
+    if (!charNode) return null; 
+    else this.deleteNode(charNode, word, index + 1); 
 
-    if (!charNode.children.size && !charNode.isWord) {
+    if (!charNode.children.size && !charNode.isWord)
       current.children.delete(char); 
-    }
   }
 }
 
@@ -78,20 +77,23 @@ let trie = new Trie();
 
 trie.insert("car"); 
 // console.log("car: " + trie.search("car"));
-trie.insert("cart")
+trie.insert("cart");
+trie.insert("carton");
 // console.log("cart: " + trie.search("cart"));
 trie.insert("due");
 // console.log("due: " + trie.search("due"));
 console.log(trie.root.children); 
 
-trie.delete("duee"); 
+trie.delete("ca"); 
 console.log("car: " + trie.search("car"));
 console.log("cart: " + trie.search("cart"));
+console.log("carton: " + trie.search("carton"));
 console.log("due: " + trie.search("due"));
 console.log(trie.root.children); 
 
-// console.log(trie.root.children); 
-// let nextNode = trie.root.children.get("c").children.get("a");
-// console.log(nextNode); 
+console.log(trie.root.children); 
+let nextNode = trie.root.children.get("c").children.get("a");
+console.log(nextNode); 
 
-// console.log(nextNode.children.get("r"))
+console.log(nextNode.children.get("r"))
+// console.log(nextNode.children.get("r").children.get("t").children.get("o"));
