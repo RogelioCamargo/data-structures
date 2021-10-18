@@ -31,4 +31,22 @@ class Trie {
 
     this.insertNode(charNode, word, index + 1); 
   }
+
+  search(word) {
+    if (!word.length) return false; 
+    return this.searchNode(this.root, word, index); 
+  }
+
+  searchNode(current, word, index) {
+    if (index === word.length) {
+      return current.isWord;
+    }; 
+
+    let char = word.charAt(index); 
+    let charNode = current.children.get(char); 
+
+    if (!charNode) return false; 
+
+    return this.searchNode(charNode, word, index + 1); 
+  }
 }
