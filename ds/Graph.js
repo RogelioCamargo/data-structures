@@ -14,6 +14,7 @@ class GraphNode {
       this.adjacents.splice(index, 1); 
       return node; 
     }
+    return null; 
   }
 
   getAdjacents() {
@@ -22,5 +23,36 @@ class GraphNode {
 
   isAdjacent(node) {
     return this.adjacents.indexOf(node) > -1; 
+  }
+}
+
+class Graph {
+  constructor() {
+    this.nodes = new Map();
+  }
+
+  addVertex(value) {
+    if (this.nodes.has(value)) return this.nodes.get(value); 
+    let vertex = new GraphNode(value);   
+    this.nodes.set(value, vertex);
+    return vertex; 
+  }
+
+  removeVertex(value) {
+    let vertex = this.nodes.get(value); 
+    if (vertex) {
+      for (const node of this.nodes.values())
+        node.removeAdjacent(value); 
+    }
+    return this.nodes.delete(value);
+  }
+
+  addEdge(start, end) {
+    
+  }
+
+
+  removeEnd(start, end) {
+
   }
 }
