@@ -32,7 +32,7 @@ class Graph {
     this.typeOfGraph = typeOfGraph;
   }
 
-  static *depthFirstTraversal(root) {
+  static *depthFirstSearch(root) {
     const stack = [];
     const visited = new Set();
     stack.push(root);
@@ -46,7 +46,37 @@ class Graph {
     }
   }
 
-  static *breadthFirstTraversal(root) {
+  dfs(root) {
+    const visited = new Set(); 
+
+    function dfsUtil(current, visited) {
+      visited.add(current); 
+      console.log(current.value); 
+      current.getAdjacents().forEach((node) => {
+        if (!visited.has(node)) dfsUtil(node, visited); 
+      }); 
+    }
+
+    dfsUtil(root, visited); 
+  }
+
+  isCyclic(root) {
+    const visited = new Set(); 
+
+    function isCyclicUtil(current, visited, parent) {
+      visited.add(current); 
+      for (const node of current.getAdjacents()) {
+        if (node === parent) continue; 
+        if (visited.has(node)) return true; 
+        return isCyclicUtil(node, visited, current); 
+      }
+      return false; 
+    }
+
+    return isCyclicUtil(root, visited, null); 
+  }
+
+  static *breadthFirstSearch(root) {
     const queue = [];
     const visited = new Set();
     queue.push(root);
@@ -72,6 +102,10 @@ class Graph {
 
   getVertex(value) {
     return this.nodes.get(value);
+  }
+
+  getVertices() { 
+    return this.nodes; 
   }
 
   removeVertex(value) {
@@ -111,6 +145,27 @@ class Graph {
 
     return sourceNode.isAdjacent(destinationNode);
   }
+
+  hasPath(source, destination) {
+    let sourceNode = this.getVertex(source); 
+    let destinationNode = this.getVertex(destination); 
+
+    if (!sourceNode && !destinationNode) return false; 
+
+    let queue = []; 
+    let visited = new Set(); 
+    queue.push(sourceNode); 
+    while (queue.length) {
+      let current = queue.shift(); 
+      if (current === destinationNode)
+        return true; 
+      visited.add(current); 
+      current.getAdjacents().forEach(node => {
+        if (!visited.has(node)) queue.push(node); 
+      })
+    }
+    return false; 
+  }
 }
 
 
@@ -124,6 +179,12 @@ graph.addVertex(2);
 graph.addVertex(3); 
 graph.addVertex(4); 
 graph.addVertex(5); 
+graph.addVertex(6); 
+
+// subgraph
+let subroot = graph.addVertex(7); 
+graph.addVertex(8); 
+graph.addVertex(9); 
 
 graph.addEdge(1, 2); 
 graph.addEdge(1, 3);
@@ -131,28 +192,40 @@ graph.addEdge(3, 4);
 graph.addEdge(4, 5); 
 graph.addEdge(4, 6); 
 
-const dft = Graph.depthFirstTraversal(root); 
+// make subgraph cyclic
+graph.addEdge(7, 8); 
+graph.addEdge(8, 9); 
+graph.addEdge(9, 7); 
 
-console.log(dft.next().value.value); 
-console.log(dft.next().value.value); 
-console.log(dft.next().value.value); 
-console.log(dft.next().value.value); 
-console.log(dft.next().value.value); 
-console.log(dft.next().value.value); 
 
-console.log(); 
+console.log(graph.isCyclic(root)); 
+console.log(graph.isCyclic(subroot)); 
 
-const bft = Graph.breadthFirstTraversal(root);
 
-console.log(bft.next().value.value);
-console.log(bft.next().value.value);
-console.log(bft.next().value.value);
-console.log(bft.next().value.value);
-console.log(bft.next().value.value);
-console.log(bft.next().value.value); 
+// IGNORE BENEATH
 
-// Graph.breadthFirstSearch(root); 
-// Graph.depthFirstSearch(root); 
+// console.log(graph.hasPath(1, 5)); 
+// console.log(graph.hasPath(1, 7)); 
+
+// const dft = Graph.depthFirstSearch(root); 
+
+// console.log(dft.next().value.value); 
+// console.log(dft.next().value.value); 
+// console.log(dft.next().value.value); 
+// console.log(dft.next().value.value); 
+// console.log(dft.next().value.value); 
+// console.log(dft.next().value.value); 
+
+// console.log(); 
+
+// const bft = Graph.breadthFirstSearch(root);
+
+// console.log(bft.next().value.value);
+// console.log(bft.next().value.value);
+// console.log(bft.next().value.value);
+// console.log(bft.next().value.value);
+// console.log(bft.next().value.value);
+// console.log(bft.next().value.value); 
 
 // console.log(graph.isAdjacent(1, 2)); 
 // console.log(graph.isAdjacent(1, 3)); 
