@@ -61,19 +61,24 @@ class Graph {
   }
 
   isCyclic(root) {
-    const visited = new Set(); 
-
     function isCyclicUtil(current, visited, parent) {
       visited.add(current); 
       for (const node of current.getAdjacents()) {
-        if (node === parent) continue; 
-        if (visited.has(node)) return true; 
-        return isCyclicUtil(node, visited, current); 
+        if (node === parent) continue;
+        if (visited.has(node)) return true;
+        return isCyclicUtil(node, visited, current);
       }
       return false; 
     }
 
-    return isCyclicUtil(root, visited, null); 
+    for (const vertex of this.getVertices()) {
+      const visited = new Set(); 
+      let hasCycle = isCyclicUtil(vertex, visited, null);
+      if (hasCycle) return true; 
+    }
+    return false; 
+
+    // return isCyclicUtil(root, visited, null); 
   }
 
   static *breadthFirstSearch(root) {
@@ -105,7 +110,7 @@ class Graph {
   }
 
   getVertices() { 
-    return this.nodes; 
+    return this.nodes.values(); 
   }
 
   removeVertex(value) {
@@ -198,8 +203,8 @@ graph.addEdge(8, 9);
 graph.addEdge(9, 7); 
 
 
-console.log(graph.isCyclic(root)); 
-console.log(graph.isCyclic(subroot)); 
+console.log(graph.isCyclic(root)); // true
+// console.log(graph.isCyclic(subroot)); 
 
 
 // IGNORE BENEATH
