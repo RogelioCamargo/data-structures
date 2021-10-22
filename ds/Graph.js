@@ -113,7 +113,8 @@ class Graph {
       for (const node of current.getAdjacents()) {
         if (node === parent) continue;
         if (visited.has(node)) return true;
-        return util(node, visited, current);
+        let hasCycle = util(node, visited, parent); 
+        return hasCycle;
       }
       return false; 
     }
@@ -129,32 +130,33 @@ class Graph {
   }
 
   isCyclicDirected() {
-    function util(current, white, grey, black) {
-      white.delete(current); 
-      grey.add(current);
+    function swap(current, source, destination) {
+      source.delete(current);
+      destination.add(current);
+    }
+
+    function util(current, unvisited, visiting, visited) {
+      swap(current, unvisited, visiting); 
+
       for (const adjacent of current.getAdjacents()) {
-        if (black.has(adjacent)) continue;
-        if (grey.has(adjacent)) return true;
-        let hasCycle = util(adjacent, white, grey, black);
+        if (visited.has(adjacent)) continue;
+        if (visiting.has(adjacent)) return true;
+        let hasCycle = util(adjacent, unvisited, visiting, visited);
         if (hasCycle) return true;
       }
 
-      grey.delete(current);
-      black.add(current);
+      swap(current, visiting, visited);
       return false; 
     }
 
-    const white = new Set(); 
-    const grey = new Set();
-    const black = new Set(); 
-    for (const vertex of this.getVertices())
-      white.add(vertex); 
+    const unvisited = new Set([...this.getVertices()]); 
+    const visiting = new Set();
+    const visited = new Set(); 
 
-    let iterator = white.values(); 
-    while (white.size > 0) {
+    let iterator = unvisited.values(); 
+    while (unvisited.size > 0) {
       let current = iterator.next().value; 
-      console.log(current); 
-      let hasCycle = util(current, white, grey, black); 
+      let hasCycle = util(current, unvisited, visiting, visited); 
       if (hasCycle) return true; 
     }
 
