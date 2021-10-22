@@ -32,63 +32,55 @@ class Graph {
     this.typeOfGraph = typeOfGraph;
   }
 
-  static *depthFirstSearch(root) {
+  // static *depthFirstSearch(root) {
+  //   const stack = [];
+  //   const visited = new Set();
+  //   stack.push(root);
+  //   while (stack.length) {
+  //     const current = stack.pop();
+  //     yield current;
+  //     visited.add(current);
+  //     current.getAdjacents().forEach((node) => {
+  //       if (!visited.has(node)) stack.push(node);
+  //     });
+  //   }
+  // }
+
+  dfs(root) {
     const stack = [];
     const visited = new Set();
     stack.push(root);
     while (stack.length) {
       const current = stack.pop();
-      yield current;
       visited.add(current);
+      console.log(current.value); 
       current.getAdjacents().forEach((node) => {
         if (!visited.has(node)) stack.push(node);
       });
     }
   }
 
-  dfs(root) {
-    const visited = new Set(); 
+  // dfs(root) {
+  //   const visited = new Set(); 
+  //   function dfsUtil(current, visited) {
+  //     visited.add(current); 
+  //     console.log(current.value); 
+  //     current.getAdjacents().forEach((node) => {
+  //       if (!visited.has(node)) dfsUtil(node, visited); 
+  //     }); 
+  //   }
 
-    function dfsUtil(current, visited) {
-      visited.add(current); 
-      console.log(current.value); 
-      current.getAdjacents().forEach((node) => {
-        if (!visited.has(node)) dfsUtil(node, visited); 
-      }); 
-    }
+  //   dfsUtil(root, visited); 
+  // }
 
-    dfsUtil(root, visited); 
-  }
-
-  isCyclic(root) {
-    function isCyclicUtil(current, visited, parent) {
-      visited.add(current); 
-      for (const node of current.getAdjacents()) {
-        if (node === parent) continue;
-        if (visited.has(node)) return true;
-        return isCyclicUtil(node, visited, current);
-      }
-      return false; 
-    }
-
-    for (const vertex of this.getVertices()) {
-      const visited = new Set(); 
-      let hasCycle = isCyclicUtil(vertex, visited, null);
-      if (hasCycle) return true; 
-    }
-    return false; 
-
-    // return isCyclicUtil(root, visited, null); 
-  }
-
-  static *breadthFirstSearch(root) {
+  static bfs(root) {
     const queue = [];
     const visited = new Set();
     queue.push(root);
     while (queue.length) {
       const current = queue.shift();
-      // return node
-      yield current;
+      // print value
+      console.log(current.value); 
       // add to visited set
       visited.add(current);
       // add neighbors
@@ -96,6 +88,77 @@ class Graph {
         if (!visited.has(node)) queue.push(node);
       });
     }
+  }
+
+  // static *breadthFirstSearch(root) {
+  //   const queue = [];
+  //   const visited = new Set();
+  //   queue.push(root);
+  //   while (queue.length) {
+  //     const current = queue.shift();
+  //     // return node
+  //     yield current;
+  //     // add to visited set
+  //     visited.add(current);
+  //     // add neighbors
+  //     current.getAdjacents().forEach((node) => {
+  //       if (!visited.has(node)) queue.push(node);
+  //     });
+  //   }
+  // }
+
+  isCyclicUndirected() {
+    function util(current, visited, parent) {
+      visited.add(current); 
+      for (const node of current.getAdjacents()) {
+        if (node === parent) continue;
+        if (visited.has(node)) return true;
+        return util(node, visited, current);
+      }
+      return false; 
+    }
+
+    for (const vertex of this.getVertices()) {
+      const visited = new Set(); 
+      let hasCycle = util(vertex, visited, null);
+      if (hasCycle) return true; 
+    }
+    return false; 
+
+    // return isCyclicUtil(root, visited, null); 
+  }
+
+  isCyclicDirected() {
+    function util(current, white, grey, black) {
+      white.delete(current); 
+      grey.add(current);
+      for (const adjacent of current.getAdjacents()) {
+        if (black.has(adjacent)) continue;
+        if (grey.has(adjacent)) return true;
+        let hasCycle = util(adjacent, white, grey, black);
+        if (hasCycle) return true;
+      }
+
+      grey.delete(current);
+      black.add(current);
+      return false; 
+    }
+
+    const white = new Set(); 
+    const grey = new Set();
+    const black = new Set(); 
+    for (const vertex of this.getVertices())
+      white.add(vertex); 
+
+    let iterator = white.values(); 
+    while (white.size > 0) {
+      let current = iterator.next().value; 
+      console.log(current); 
+      let hasCycle = util(current, white, grey, black); 
+      if (hasCycle) return true; 
+    }
+
+    return false; 
   }
 
   addVertex(value) {
@@ -111,6 +174,10 @@ class Graph {
 
   getVertices() { 
     return this.nodes.values(); 
+  }
+
+  getSize() {
+    return this.nodes.size;
   }
 
   removeVertex(value) {
@@ -177,33 +244,49 @@ class Graph {
 Graph.UNDIRECTED = Symbol("UNDIRECTED"); 
 Graph.DIRECTED = Symbol("DIRECTED");
 
-const graph = new Graph(); 
+// const graph = new Graph(); 
 
-const root = graph.addVertex(1); 
-graph.addVertex(2); 
-graph.addVertex(3); 
-graph.addVertex(4); 
-graph.addVertex(5); 
-graph.addVertex(6); 
+const dgraph = new Graph(Graph.DIRECTED); 
 
-// subgraph
-let subroot = graph.addVertex(7); 
-graph.addVertex(8); 
-graph.addVertex(9); 
+dgraph.addEdge(4, 1); 
+dgraph.addEdge(4, 5); 
+dgraph.addEdge(5, 6); 
+dgraph.addEdge(6, 4); 
+dgraph.addEdge(1, 2); 
+dgraph.addEdge(1, 3); 
+dgraph.addEdge(2, 3); 
 
-graph.addEdge(1, 2); 
-graph.addEdge(1, 3);
-graph.addEdge(3, 4);
-graph.addEdge(4, 5); 
-graph.addEdge(4, 6); 
+let result = dgraph.isCyclicDirected(); 
+console.log(result); 
 
-// make subgraph cyclic
-graph.addEdge(7, 8); 
-graph.addEdge(8, 9); 
-graph.addEdge(9, 7); 
+// dgraph.dfs(lroot); 
+// dgraph.dfs(rroot); 
+
+// const root = graph.addVertex(1); 
+// graph.addVertex(2); 
+// graph.addVertex(3); 
+// graph.addVertex(4); 
+// graph.addVertex(5); 
+// graph.addVertex(6); 
+
+// // subgraph
+// let subroot = graph.addVertex(7); 
+// graph.addVertex(8); 
+// graph.addVertex(9); 
+
+// graph.addEdge(1, 2); 
+// graph.addEdge(1, 3);
+// graph.addEdge(3, 4);
+// graph.addEdge(4, 5); 
+// graph.addEdge(4, 6); 
+
+// // make subgraph cyclic
+// graph.addEdge(7, 8); 
+// graph.addEdge(8, 9); 
+// graph.addEdge(9, 7); 
 
 
-console.log(graph.isCyclic(root)); // true
+// console.log(graph.isCyclic()); // true
 // console.log(graph.isCyclic(subroot)); 
 
 
